@@ -8,7 +8,10 @@ function onShare(){
     title = Amarok.Engine.currentTrack().title;
     length = Amarok.Engine.currentTrack().length;    
     
-    duration = millisecondsToTime(length);
+    second = length/1000;
+    minute = second / 60;
+    second = second % 60;
+    duration = Math.floor(minute) + ":" + Math.floor(second);
     
     d = new Date();
     playdate = d.getFullYear() + '-' +(d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
@@ -16,22 +19,6 @@ function onShare(){
     
     Url = new QUrl(surl);
     QDesktopServices.openUrl( Url );
-}
-
-function millisecondsToTime(length){
-    second = length/1000;
-
-    if (second > 60) {
-      minute = second / 60;
-      second = second % 60;
-      duration = Math.floor(minute) + ":" + Math.floor(second);
-    }
-    if (minute > 60) {
-      hour = minute / 60;
-      minute = minute % 60;
-      duration = Math.floor(hour) + ":" + Math.floor(minute) + ":" + Math.floor(second);
-    }
-    return duration;
 }
 
 Amarok.Window.addToolsMenu("share", "Share Nowplaying");
